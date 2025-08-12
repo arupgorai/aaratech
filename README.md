@@ -62,7 +62,15 @@ If everything is set up correctly, you should see your new app running in the An
 
 This is one way to run your app — you can also build it directly from Android Studio or Xcode.
 
-## Step 2: App Screen Shots
+## Step 3: Android APK
+
+Android APK Build is available inside /root/src/assets/app-debug.apk
+
+![Login Screen.](./src/assets/login-screen.png 'This is a Login Screen.')
+![Signup Screen.](./src/assets/signup-screen.png 'This is a Signup Screen.')
+![Home Screen.](./src/assets/home-screen.png 'This is a Home Screen.')
+
+## Step 4: App Screen Shots
 
 ![Login Screen.](./src/assets/login-screen.png 'This is a Login Screen.')
 ![Signup Screen.](./src/assets/signup-screen.png 'This is a Signup Screen.')
