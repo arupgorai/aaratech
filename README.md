@@ -64,7 +64,7 @@ This is one way to run your app — you can also build it directly from Android 
 
 ## Step 3: Android APK
 
-Android APK Build is available inside /root/src/assets/app-debug.apk
+Android APK Build can be downloaded [here](https://drive.google.com/file/d/174csW9N_NPHk4dSLqz4dO01nXJANaP2K/view?usp=drive_link).
 
 ![Login Screen.](./src/assets/login-screen.png 'This is a Login Screen.')
 ![Signup Screen.](./src/assets/signup-screen.png 'This is a Signup Screen.')
