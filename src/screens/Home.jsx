@@ -1,10 +1,37 @@
 // screens/HomeScreen.js
-import React from 'react';
+import React, {use, useEffect, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import {getData, removeData} from '../utils/async-storage';
 import {useAppContext} from '../context/AppContext';
 
-export default function HomeScreen() {
-  const {user, logout} = useAppContext();
+export default function HomeScreen({navigation}) {
+  const [user, setUser] = useState(null);
+
+  const getUserName = () => {
+    if (user && user.name) {
+      return user.name;
+    } else if (user && user.email) {
+      return user.email.split('@')[0]; // Use email prefix as fallback
+    }
+    return 'Guest';
+  };
+
+  const handleLogout = async () => {
+    await removeData('user');
+    navigation.replace('Login');
+  };
+
+  useEffect(() => {
+    const checkUser = async () => {
+      const storedUser = await getData('user');
+      if (storedUser && storedUser != null) {
+        setUser(storedUser);
+      } else {
+        navigation.replace('Signup');
+      }
+    };
+    checkUser();
+  }, [navigation]);
 
   return (
     <View style={{flex: 1, backgroundColor: '#f4f6f8', padding: 20}}>
@@ -29,7 +56,7 @@ export default function HomeScreen() {
           Name:
         </Text>
         <Text style={{fontSize: 16, color: '#666', marginBottom: 12}}>
-          {user?.name || 'Guest'}
+          {getUserName(user)}
         </Text>
 
         <Text style={{fontSize: 18, fontWeight: '600', color: '#333'}}>
@@ -42,7 +69,9 @@ export default function HomeScreen() {
 
       {/* Logout Button */}
       <TouchableOpacity
-        onPress={logout}
+        onPress={() => {
+          handleLogout();
+        }}
         style={{
           backgroundColor: '#ff4d4d',
           paddingVertical: 14,

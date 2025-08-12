@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import Input from '../components/Input';
+import {storeData} from '../utils/async-storage';
 
 export default function SignupScreen({navigation}) {
   const [name, setName] = useState('');
@@ -9,7 +10,7 @@ export default function SignupScreen({navigation}) {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  const handleSignup = () => {
+  const handleSignup = async () => {
     let newErrors = {};
     if (!name.trim()) newErrors.name = 'Name is required';
     if (!email.includes('@')) newErrors.email = 'Enter a valid email';
@@ -21,7 +22,9 @@ export default function SignupScreen({navigation}) {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      Alert.alert('Signup Success', `Welcome, ${name}!`);
+      const user = {name, email, password};
+      await storeData('user', user);
+      navigation.replace('Home');
     }
   };
 
@@ -98,7 +101,7 @@ export default function SignupScreen({navigation}) {
 
       <TouchableOpacity
         style={{marginTop: 16}}
-        onPress={() => navigation.navigate('Login')}>
+        onPress={() => navigation.replace('Login')}>
         <Text style={{textAlign: 'center', color: '#4a90e2'}}>
           Already have an account? Login
         </Text>

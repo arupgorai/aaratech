@@ -1,13 +1,27 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
 import Input from '../components/Input';
+import axios from 'axios';
+import {getData, storeData} from '../utils/async-storage';
 
 export default function LoginScreen({navigation}) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errors, setErrors] = useState({});
 
-  const handleLogin = () => {
+  useEffect(() => {
+    const loadUser = async () => {
+      console.log('LoginScreen mounted');
+      const user = await getData('user');
+      console.log('Loaded user:', user);
+      if (user) {
+        navigation.replace('Home');
+      }
+    };
+    loadUser();
+  }, []);
+
+  const handleLogin = async () => {
     let newErrors = {};
     if (!email.includes('@')) newErrors.email = 'Enter a valid email';
     if (!password) newErrors.password = 'Password is required';
@@ -15,7 +29,9 @@ export default function LoginScreen({navigation}) {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      Alert.alert('Login Successful', `Welcome back, ${email}!`);
+      const user = {email, password};
+      await storeData('user', user);
+      navigation.replace('Home');
     }
   };
 
@@ -81,7 +97,7 @@ export default function LoginScreen({navigation}) {
 
       <TouchableOpacity
         style={{marginTop: 12}}
-        onPress={() => navigation.navigate('Signup')}>
+        onPress={() => navigation.replace('Signup')}>
         <Text style={{textAlign: 'center', color: '#4a90e2'}}>
           Don’t have an account? Sign Up
         </Text>
