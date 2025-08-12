@@ -1,7 +1,6 @@
-// screens/LoginScreen.js
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity, ScrollView, Alert} from 'react-native';
-import Input from '../components/Input'; // Reusable input from earlier
+import Input from '../components/Input';
 
 export default function LoginScreen({navigation}) {
   const [email, setEmail] = useState('');
