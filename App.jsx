@@ -1,18 +1,11 @@
 import {View, Text} from 'react-native';
 import {Icon} from './src/atoms';
+import {Input} from './src/components';
+import SignupScreen from './src/screens/Signup';
+import RootNavigator from './src/navigations/RootNavigator';
 
 const App = () => {
-  return (
-    <View>
-      <Text>Welcome to React Native!</Text>
-      <Icon
-        type="Entypo"
-        name="attachment"
-        style={{color: '#023595'}}
-        size={16}
-      />
-    </View>
-  );
+  return <RootNavigator />;
 };
 
 export default App;
